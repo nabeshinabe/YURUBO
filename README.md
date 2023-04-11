@@ -1,1 +1,1 @@
-# 情報システム論
+# Practice of Information Systems(Group7)
