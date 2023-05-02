@@ -1,5 +1,5 @@
-import 'package:login/hello.dart';
-import 'package:login/requester/requester.dart';
+import 'package:yurubo/nakatsuji/hello.dart';
+import 'package:yurubo/nakatsuji/requester/requester.dart';
 import 'package:flutter/material.dart';
 
 void main() {
