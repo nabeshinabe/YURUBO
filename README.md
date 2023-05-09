@@ -1,8 +1,20 @@
 # Practice of Information Systems(Group7)
 
 ## File System
-main.dart ・・・基本画面処理　　
+main.dart ・・・実行ファイル
 
-    -- list.dart・・・友達リスト作成　
-    　
-    -- chat_func.dart・・・チャット画面作成　　
+    -- loginpage.dart・・・ログインページ
+
+        -- homepage.dart・・・メインページ
+
+            -- joinpage.dart ・・・参加リスト画面
+
+                -- add_joinpage.dart・・・参加画面
+
+                -- chatpage.dart・・・チャット画面
+            
+            -- friendpage.dart ・・・友達リスト画面
+
+                -- add_friendpage.dart・・・友達リスト画面
+
+        -- register.dart・・・会員登録ページ
