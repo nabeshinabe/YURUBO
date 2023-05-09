@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:yurubo/function/joinpage.dart' as joinpage;
 import 'package:yurubo/function/friendpage.dart' as friendpage;
+import 'package:yurubo/function/mypage.dart' as mypage;
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -15,14 +16,19 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: IconButton(
-          icon: const Icon(
-            Icons.arrow_back_ios_sharp,
+        actions: <Widget>[
+          IconButton(
+            icon: const Icon(
+              Icons.settings,
+            ),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const mypage.MyPage()),
+              );
+            },
           ),
-          onPressed: () {
-            Navigator.pop(context);
-          },
-        ),
+        ],
         title: const Text("YURUBO"),
       ),
       body: pages[currentIndex],
