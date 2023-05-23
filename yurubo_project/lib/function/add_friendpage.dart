@@ -1,7 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:supabase/supabase.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:yurubo/login_num.dart' as login_num;
+import 'package:yurubo/database/operate/add_friend_func.dart' as add_friend_func;
 
-class AddFriendPage extends StatelessWidget {
+
+String add_friend_message = "";
+
+final add_friend_friendname_controller = TextEditingController();
+String add_friendname_fromUI() {
+  return add_friend_friendname_controller.text;
+}
+class AddFriendPage extends StatefulWidget {
   const AddFriendPage({super.key});
+  @override
+  State<StatefulWidget> createState() => AddFriendPageState();
+}
+
+class AddFriendPageState extends State<AddFriendPage> {
+  final supabase = Supabase.instance.client;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,7 +40,8 @@ class AddFriendPage extends StatelessWidget {
             const SizedBox(height: 20.0),
             const Text("Enter your friend's name."),
             const SizedBox(height: 5.0),
-            const TextField(
+            TextField(
+              controller: add_friend_friendname_controller,
               decoration: InputDecoration(
                 filled: true,
                 labelText: "Friend's name",
@@ -35,7 +53,18 @@ class AddFriendPage extends StatelessWidget {
                 "Add",
                 style: TextStyle(fontSize: 20),
               ),
-              onPressed: () {},
+              onPressed: () async{
+                String Add_friend_message = await add_friend_func.add_friend(add_friendname_fromUI(), supabase);
+                // ignore: use_build_context_synchronously
+                showDialog(
+                  context: context,
+                  builder: (context) {
+                    return AlertDialog(
+                      content: Text(Add_friend_message),
+                    );
+                  }, //when press【Register】button
+                );
+              },
             ),
           ],
         ),

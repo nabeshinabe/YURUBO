@@ -2,14 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:yurubo/function/joinpage.dart' as joinpage;
 import 'package:yurubo/function/friendpage.dart' as friendpage;
 import 'package:yurubo/function/mypage.dart' as mypage;
+import 'package:yurubo/login_num.dart' as login_num;
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
   @override
-  State<StatefulWidget> createState() => _HomePageState();
+  State<StatefulWidget> createState() => HomePageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class HomePageState extends State<HomePage> {
   var pages = [const joinpage.JoinPage(), const friendpage.FriendPage()];
   var currentIndex = 0;
   @override

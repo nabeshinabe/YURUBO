@@ -7,12 +7,12 @@ void main() {
   // Database読み出し
   database.main();
   
-  // Database読み出した状態で実行
-  runApp(const MaterialApp(
-    title: 'YURUBO',
-    // 最初はログインページから
-    home: loginpage.LoginPage(),
-  ));
+  // // Database読み出した状態で実行
+  // runApp(const MaterialApp(
+  //   title: 'YURUBO',
+  //   // 最初はログインページから
+  //   home: loginpage.LoginPage(),
+  // ));
 }
 
 
