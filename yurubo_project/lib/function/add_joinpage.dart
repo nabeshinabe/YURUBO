@@ -13,14 +13,14 @@ class AddJoinPageState extends State<AddJoinPage> {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-          icon: Icon(
+          icon: const Icon(
             Icons.arrow_back_ios_sharp,
           ),
           onPressed: () {
             Navigator.pop(context);
           },
         ),
-        title: Text("Add Restaurant"),
+        title: const Text("Add Restaurant"),
       ),
       body: SafeArea(
         child: ListView(
@@ -29,7 +29,7 @@ class AddJoinPageState extends State<AddJoinPage> {
             const SizedBox(height: 20.0),
             const Text("Enter the restaurant's name."),
             const SizedBox(height: 5.0),
-            TextField(
+            const TextField(
               decoration: InputDecoration(
                 filled: true,
                 labelText: "Restaurant",
@@ -39,11 +39,11 @@ class AddJoinPageState extends State<AddJoinPage> {
             const Text("Select the max number of people."),
             const SizedBox(height: 5.0),
             DropdownButton(
-                icon: Icon(Icons.arrow_right),
+                icon: const Icon(Icons.arrow_right),
                 iconSize: 20,
                 iconEnabledColor: Colors.green.withOpacity(0.7),
-                hint: Text('Max People'),
-                items: [
+                hint: const Text('Max People'),
+                items: const [
                   DropdownMenuItem(child: Text('        1'), value: 1),
                   DropdownMenuItem(child: Text('        2'), value: 2),
                   DropdownMenuItem(child: Text('        3'), value: 3),
@@ -58,7 +58,7 @@ class AddJoinPageState extends State<AddJoinPage> {
             const SizedBox(height: 30.0),
             const Text("Enter the time."),
             const SizedBox(height: 5.0),
-            TextField(
+            const TextField(
               decoration: InputDecoration(
                 filled: true,
                 labelText: "Time",

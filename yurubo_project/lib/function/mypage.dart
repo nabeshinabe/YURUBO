@@ -24,7 +24,7 @@ class MyPageState extends State<MyPage> {
         body: ListView(
           padding: const EdgeInsets.symmetric(horizontal: 24.0),
           children: [
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             ElevatedButton(
               child: const Text(
                 "Change Password",
@@ -32,7 +32,7 @@ class MyPageState extends State<MyPage> {
               ),
               onPressed: () {},
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             ElevatedButton(
               child: const Text(
                 "other function??",
@@ -40,7 +40,7 @@ class MyPageState extends State<MyPage> {
               ),
               onPressed: () {},
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             ElevatedButton(
               child: const Text(
                 "other function??",
@@ -48,7 +48,7 @@ class MyPageState extends State<MyPage> {
               ),
               onPressed: () {},
             ),
-            SizedBox(height: 40),
+            const SizedBox(height: 40),
             ElevatedButton(
               child: const Text(
                 "Logout",
