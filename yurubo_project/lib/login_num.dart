@@ -1,0 +1,1 @@
+int now_login_ID = 0;

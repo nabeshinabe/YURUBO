@@ -1,24 +1,125 @@
 import 'package:flutter/material.dart';
+import 'package:yurubo/function/joinpage.dart';
+import 'package:yurubo/login_num.dart' as login_num;
+
+List chat_list = [
+  [102, "Friend_B", "17:04", "BBBBBB"],
+  [101, "Friend_A", "17:12", "AAAAAAAAAAA"],
+  [103, "Friend_C", "17:13", "CCCCCCCCCC"],
+  [101, "Friend_A", "17:16", "AAAAAAA"],
+  [103, "Friend_C", "17:17", "CCCCCCC"],
+  [104, "Friend_D", "17:25", "DDDDDDDDDDDDD"],
+  [102, "Friend_B", "17:26", "BBBBBB"],
+  [104, "Friend_D", "17:26", "DDDDDDDD"],
+];
+
+final chat_send_controller = TextEditingController();
+
+String chat_send_fromUI() {
+  return chat_send_controller.text;
+}
 
 class ChatPage extends StatefulWidget {
   const ChatPage({Key? key}) : super(key: key);
 
   @override
-  _ChatPageState createState() => _ChatPageState();
+  ChatPageState createState() => ChatPageState();
 }
 
-class _ChatPageState extends State<ChatPage> {
-  final _messageController = TextEditingController();
-  final List<String> _messages = [];
-  final _scrollController = ScrollController();
+class ChatPageState extends State<ChatPage> {
+  Card show_chat_card(name, time, message) {
+    Card chat_card = Card(
+      child: Center(
+        child: Padding(
+            padding: const EdgeInsets.fromLTRB(15.0, 10.0, 15.0, 10.0),
+            child: Column(
+              children: [
+                Row(
+                  children: [
+                    Text(
+                      name,
+                      style: const TextStyle(fontSize: 25),
+                    ),
+                    SizedBox(width: 14),
+                    Text(
+                      time,
+                      style: const TextStyle(fontSize: 15),
+                    ),
+                  ],
+                ),
+                SizedBox(height: 5),
+                Row(
+                  children: [
+                    SizedBox(width: 20),
+                    Text(
+                      message,
+                      style: const TextStyle(fontSize: 20),
+                    ),
+                  ],
+                )
+              ],
+            )),
+      ),
+    );
 
-  @override
-  void dispose() {
-    _messageController.dispose();
-    _scrollController.dispose();
-    super.dispose();
+    return chat_card;
   }
 
+  Card show_chat_card_I(name, time, message) {
+    Card chat_card = Card(
+      child: Center(
+        child: Padding(
+            padding: const EdgeInsets.fromLTRB(15.0, 10.0, 15.0, 10.0),
+            child: Column(
+              children: [
+                Row(
+                  children: [
+                    Expanded(child: SizedBox(width: 1)),
+                    Text(
+                      time,
+                      style: const TextStyle(fontSize: 15),
+                    ),
+                    SizedBox(width: 14),
+                    Text(
+                      name,
+                      style: const TextStyle(fontSize: 25),
+                    ),
+                  ],
+                ),
+                SizedBox(height: 5),
+                Row(
+                  children: [
+                    Expanded(child: SizedBox(width: 1)),
+                    Text(
+                      message,
+                      style: const TextStyle(fontSize: 20),
+                    ),
+                    SizedBox(width: 20),
+                  ],
+                )
+              ],
+            )),
+      ),
+    );
+
+    return chat_card;
+  }
+
+  Widget show_chat_card_list() {
+    List<Card> chat_card_list = [];
+    for (int i = 0; i < chat_list.length; i++) {
+      if (chat_list[i][0] == login_num.now_login_ID) {
+        chat_card_list.add(show_chat_card_I(
+            chat_list[i][1], chat_list[i][2], chat_list[i][3]));
+      } else {
+        chat_card_list.add(
+            show_chat_card(chat_list[i][1], chat_list[i][2], chat_list[i][3]));
+      }
+    }
+    return Column(children: chat_card_list);
+  }
+
+  @override
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,35 +130,23 @@ class _ChatPageState extends State<ChatPage> {
             Navigator.pop(context);
           },
         ),
-        title: const Text("Chat"),
+        title: const Text("Chat Room"),
       ),
       body: Column(
         children: [
           Expanded(
-            child: ListView.builder(
-              controller: _scrollController,
-              itemCount: _messages.length,
-              itemBuilder: (BuildContext context, int index) {
-                final message = _messages[index];
-                return Container(
-                  margin: const EdgeInsets.all(8.0),
-                  padding: const EdgeInsets.all(8.0),
-                  decoration: BoxDecoration(
-                    color: Colors.grey[200],
-                    borderRadius: BorderRadius.circular(16.0),
-                  ),
-                  child: Text(message),
-                );
-              },
-            ),
-          ),
+              child: ListView(
+            children: [
+              show_chat_card_list(),
+            ],
+          )),
           const SizedBox(height: 16.0),
           Row(
             children: [
               const SizedBox(height: 100.0),
               Expanded(
                 child: TextField(
-                  controller: _messageController,
+                  controller: chat_send_controller,
                   decoration: const InputDecoration(
                     filled: true,
                     labelText: "Message",
@@ -65,25 +154,13 @@ class _ChatPageState extends State<ChatPage> {
                 ),
               ),
               const SizedBox(width: 10.0),
-              SizedBox(
-                width: 65.0,
-                child: ElevatedButton(
-                  child: const Text('send'),
-                  onPressed: () {
-                    setState(() {
-                      final message = _messageController.text;
-                      _messages.add(message);
-                      _messageController.clear();
-                    });
-                    // 新しいメッセージが送信されたら、最下部にスクロールする
-                    _scrollController.animateTo(
-                      _scrollController.position.maxScrollExtent,
-                      duration: Duration(milliseconds: 300),
-                      curve: Curves.easeOut,
-                    );
-                  },
-                ),
+              ElevatedButton(
+                child: const Text('Send'),
+                onPressed: () {
+                  setState(() {});
+                }, //when press【Send】button
               ),
+              const SizedBox(width: 10.0),
             ],
           ),
         ],
