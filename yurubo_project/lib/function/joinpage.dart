@@ -16,7 +16,6 @@ List join_list = [
 ];
 
 String now_join_place = '';
-String now_join = '';
 
 class JoinPage extends StatefulWidget {
   const JoinPage({super.key});
@@ -27,7 +26,7 @@ class JoinPage extends StatefulWidget {
 class JoinPageState extends State<JoinPage> {
   final supabase = Supabase.instance.client;
 
-  Card show_join_card(name, place, max, time, comment) {
+  Card show_join_card(room_number, place, max, time, comment) {
     Card join_card = Card(
       child: Center(
         child: Padding(
@@ -46,7 +45,7 @@ class JoinPageState extends State<JoinPage> {
                         setState(() {
                           now_join_place = place;
 
-                          now_join = name; 
+                          login_num.now_join_room_number = room_number; 
                         });
                       },
                     ),
@@ -131,6 +130,7 @@ class JoinPageState extends State<JoinPage> {
                 style: TextStyle(fontSize: 20),
               ),
               onPressed: () {
+                join_func.join(login_num.now_login_ID.toString(), login_num.now_join_room_number, supabase);
                 Navigator.push(
                   context,
                   MaterialPageRoute(
@@ -158,7 +158,7 @@ class JoinPageState extends State<JoinPage> {
               style: TextStyle(fontSize: 20),
             ),
             onPressed: () async{
-                List join_list_0 = await join_func.getRoomsFromSupabase(login_num.now_login_ID.toString(), supabase);            
+                List join_list_0 = await join_func.getRoomsFromSupabase(supabase);         
                 setState(() {join_list = join_list_0;});
               }, //when press【Renew】button
           ),
