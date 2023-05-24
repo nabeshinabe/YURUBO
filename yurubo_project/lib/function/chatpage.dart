@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:yurubo/function/joinpage.dart';
 import 'package:yurubo/login_num.dart' as login_num;
+import 'package:yurubo/database/operate/chat_func.dart' as chat_func;
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 List chat_list = [
   [102, "Friend_B", "17:04", "BBBBBB"],
@@ -27,6 +29,8 @@ class ChatPage extends StatefulWidget {
 }
 
 class ChatPageState extends State<ChatPage> {
+  final supabase = Supabase.instance.client;
+
   Card show_chat_card(name, time, message) {
     Card chat_card = Card(
       child: Center(
@@ -120,7 +124,6 @@ class ChatPageState extends State<ChatPage> {
   }
 
   @override
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -134,6 +137,32 @@ class ChatPageState extends State<ChatPage> {
       ),
       body: Column(
         children: [
+          const SizedBox(height: 10),
+          Row(children: [
+            const SizedBox(width: 40),
+            ElevatedButton(
+              child: const Text(
+                "Reload",
+                style: TextStyle(fontSize: 20),
+              ),
+              onPressed: () async{
+                List chat_list_0 = await chat_func.getmessages(login_num.now_join_room_number, supabase);            
+                setState(() {chat_list = chat_list_0;});
+              }, //when press【Join】button
+            ),
+            const SizedBox(width: 30),
+            Text(
+              now_join_place,
+              style: TextStyle(fontSize: 25),
+            ),
+          ]),
+
+          const Divider(
+            height: 10.0,
+            indent: 10.0,
+            color: Colors.blue,
+          ),
+
           Expanded(
               child: ListView(
             children: [
@@ -156,8 +185,8 @@ class ChatPageState extends State<ChatPage> {
               const SizedBox(width: 10.0),
               ElevatedButton(
                 child: const Text('Send'),
-                onPressed: () {
-                  setState(() {});
+                onPressed: () async{
+                  chat_func.sendchat(login_num.now_join_room_number, login_num.now_login_ID, chat_send_fromUI(), supabase);
                 }, //when press【Send】button
               ),
               const SizedBox(width: 10.0),
