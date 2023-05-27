@@ -38,13 +38,13 @@ class AddFriendPageState extends State<AddFriendPage> {
           padding: const EdgeInsets.symmetric(horizontal: 24.0),
           children: <Widget>[
             const SizedBox(height: 20.0),
-            const Text("Enter your friend's name."),
+            const Text("Enter your friend's ID."),
             const SizedBox(height: 5.0),
             TextField(
               controller: add_friend_friendname_controller,
               decoration: InputDecoration(
                 filled: true,
-                labelText: "Friend's name",
+                labelText: "Friend's ID",
               ),
             ),
             const SizedBox(height: 30.0),

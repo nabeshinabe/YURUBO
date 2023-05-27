@@ -130,12 +130,23 @@ class JoinPageState extends State<JoinPage> {
                 style: TextStyle(fontSize: 20),
               ),
               onPressed: () {
-                join_func.join(login_num.now_login_ID.toString(), login_num.now_join_room_number, supabase);
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => const chatpage.ChatPage()),
-                );
+                if(login_num.now_join_room_number != 0){
+                  join_func.join(login_num.now_login_ID.toString(), login_num.now_join_room_number, supabase);
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const chatpage.ChatPage()),
+                  );
+                }else{
+                  showDialog(
+                    context: context,
+                    builder: (context) {
+                      return const AlertDialog(
+                        content: Text("何も選択されていません"),
+                      );
+                    }, //when press【Register】button
+                  );
+                }
               }, //when press【Join】button
             ),
             const SizedBox(width: 30),
@@ -158,8 +169,12 @@ class JoinPageState extends State<JoinPage> {
               style: TextStyle(fontSize: 20),
             ),
             onPressed: () async{
-                List join_list_0 = await join_func.getRoomsFromSupabase(supabase);         
-                setState(() {join_list = join_list_0;});
+                bool is_makeroom = await join_func.is_makeroom(login_num.now_login_ID, supabase);
+                List join_list_0 = await join_func.getRoomsFromSupabase(is_makeroom, supabase);         
+                setState(() {
+                  join_list = join_list_0;
+                  now_join_place = '';
+                });
               }, //when press【Renew】button
           ),
         ),

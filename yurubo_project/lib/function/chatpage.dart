@@ -3,16 +3,17 @@ import 'package:yurubo/function/joinpage.dart';
 import 'package:yurubo/login_num.dart' as login_num;
 import 'package:yurubo/database/operate/chat_func.dart' as chat_func;
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:yurubo/function/joinpage.dart' as joinpage;
 
 List chat_list = [
-  [102, "Friend_B", "17:04", "BBBBBB"],
-  [101, "Friend_A", "17:12", "AAAAAAAAAAA"],
-  [103, "Friend_C", "17:13", "CCCCCCCCCC"],
-  [101, "Friend_A", "17:16", "AAAAAAA"],
-  [103, "Friend_C", "17:17", "CCCCCCC"],
-  [104, "Friend_D", "17:25", "DDDDDDDDDDDDD"],
-  [102, "Friend_B", "17:26", "BBBBBB"],
-  [104, "Friend_D", "17:26", "DDDDDDDD"],
+  // [102, "Friend_B", "17:04", "BBBBBB"],
+  // [101, "Friend_A", "17:12", "AAAAAAAAAAA"],
+  // [103, "Friend_C", "17:13", "CCCCCCCCCC"],
+  // [101, "Friend_A", "17:16", "AAAAAAA"],
+  // [103, "Friend_C", "17:17", "CCCCCCC"],
+  // [104, "Friend_D", "17:25", "DDDDDDDDDDDDD"],
+  // [102, "Friend_B", "17:26", "BBBBBB"],
+  // [104, "Friend_D", "17:26", "DDDDDDDD"],
 ];
 
 final chat_send_controller = TextEditingController();
@@ -134,6 +135,22 @@ class ChatPageState extends State<ChatPage> {
           },
         ),
         title: const Text("Chat Room"),
+        actions: <Widget>[
+          ElevatedButton(
+              onPressed: () {
+                Navigator.pop(context);
+                chat_func.deleteChatRoom(login_num.now_join_room_number, supabase);   
+                setState(() {
+                  login_num.now_join_room_number = 0;
+                  joinpage.now_join_place = '';
+                });
+              },
+              child: const Text(
+                " Room Delete",
+                style: TextStyle(fontSize: 15),
+              ),
+            ),
+        ],
       ),
       body: Column(
         children: [
@@ -186,7 +203,15 @@ class ChatPageState extends State<ChatPage> {
               ElevatedButton(
                 child: const Text('Send'),
                 onPressed: () async{
-                  chat_func.sendchat(login_num.now_join_room_number, login_num.now_login_ID, chat_send_fromUI(), supabase);
+                  await chat_func.sendchat(login_num.now_join_room_number, login_num.now_login_ID, chat_send_fromUI(), supabase);
+                  
+                  // 送信と同時にリストの更新
+                  List chat_list_0 = await chat_func.getmessages(login_num.now_join_room_number, supabase);            
+                  setState(() {
+                    chat_list = chat_list_0; 
+                    chat_send_controller.text = ""; // 送信と同時に書いた文字も消す
+                    });
+                  
                 }, //when press【Send】button
               ),
               const SizedBox(width: 10.0),

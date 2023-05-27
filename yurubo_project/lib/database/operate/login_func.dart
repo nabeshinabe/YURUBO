@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 // import 'dart:convert';
 import 'package:supabase/supabase.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:yurubo/login_num.dart' as login_num;
 // import 'package:data/data.dart';
 // import 'dart:math';
 
@@ -30,6 +31,16 @@ Future<List> Login(String login_username_fromUI, String login_password_fromUI, S
     final response_data = response[0];
     now_login_ID = int.parse(response_data['ID']);
     // await supabase.from('Profile').update(userData);
+
+    // // 参加しているルームがあるかをチェック
+    final join_room_num_list = await supabase.from('Chat_ID').select('Room_number').eq('ID', now_login_ID);
+
+    int join_room_num = 0;
+    if(join_room_num_list.isNotEmpty){
+      join_room_num = join_room_num_list[0]["Room_number"];
+      login_num.now_join_room_number = join_room_num;
+    }
+
     Message = "Login Successfully!";
   }
   return [Message, now_login_ID];
