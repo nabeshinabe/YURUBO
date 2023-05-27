@@ -17,6 +17,13 @@ class HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+          icon: const Icon(Icons.logout),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
+        title: const Text("YURUBO"),
         actions: <Widget>[
           IconButton(
             icon: const Icon(
@@ -30,7 +37,6 @@ class HomePageState extends State<HomePage> {
             },
           ),
         ],
-        title: const Text("YURUBO"),
       ),
       body: pages[currentIndex],
       bottomNavigationBar: BottomNavigationBar(

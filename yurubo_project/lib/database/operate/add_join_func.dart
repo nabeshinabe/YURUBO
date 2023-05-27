@@ -36,13 +36,6 @@ Future<int> generateRoomNumber(SupabaseClient supabase) async {
 
 // 募集開始
 Future<String> add_join(String Place, String Max_people, String Time, String Comment, SupabaseClient supabase) async {
-  // デバッグ用
-  await supabase
-    .from('Chat_room')
-    .delete()
-    .match({'Room_number': 640033});
-  
-
   final response = await supabase.from('Chat_room').select().eq('leader_ID', login_num.now_login_ID);
 
   String Message = "";

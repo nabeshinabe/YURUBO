@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:yurubo/login_num.dart' as login_num;
 import 'package:yurubo/database/operate/add_join_func.dart' as add_join_func;
+import 'package:yurubo/function/joinpage.dart' as joinpage;
 
 String add_join_message = "";
 
@@ -37,7 +38,7 @@ class AddJoinPageState extends State<AddJoinPage> {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-          icon: Icon(
+          icon: const Icon(
             Icons.arrow_back_ios_sharp,
           ),
           onPressed: () {
@@ -55,7 +56,7 @@ class AddJoinPageState extends State<AddJoinPage> {
             const SizedBox(height: 5.0),
             TextField(
               controller: add_join_place_controller,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 filled: true,
                 labelText: "Place",
               ),
@@ -67,8 +68,8 @@ class AddJoinPageState extends State<AddJoinPage> {
                 icon: Icon(Icons.arrow_right),
                 iconSize: 20,
                 iconEnabledColor: Colors.green.withOpacity(0.7),
-                hint: Text('Max People'),
-                items: [
+                hint: const Text('Max People'),
+                items: const [
                   DropdownMenuItem(child: Text('        1'), value: 1),
                   DropdownMenuItem(child: Text('        2'), value: 2),
                   DropdownMenuItem(child: Text('        3'), value: 3),
@@ -85,7 +86,7 @@ class AddJoinPageState extends State<AddJoinPage> {
             const SizedBox(height: 5.0),
             TextField(
               controller: add_join_time_controller,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 filled: true,
                 labelText: "Time",
               ),
@@ -95,7 +96,7 @@ class AddJoinPageState extends State<AddJoinPage> {
             const SizedBox(height: 5.0),
             TextField(
               controller: add_join_comment_controller,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 filled: true,
                 labelText: "Comment",
               ),
@@ -109,6 +110,7 @@ class AddJoinPageState extends State<AddJoinPage> {
               onPressed: () async{
                 String Add_place_register_message = await add_join_func.add_join(add_place_fromUI(), add_max_fromUI(), add_time_fromUI(), add_comment_fromUI(), supabase);
                 // ignore: use_build_context_synchronously
+                if (!context.mounted) return;
                 showDialog(
                   context: context,
                   builder: (context) {
@@ -117,6 +119,7 @@ class AddJoinPageState extends State<AddJoinPage> {
                     );
                   }, //when press【Register】button
                 );
+                // Navigator.pop(context);
               },
             ),
           ],
