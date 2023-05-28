@@ -1,26 +1,19 @@
-//要らないパッケージ含む
-import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
+// 要らないパッケージ含む
+// import 'package:flutter/foundation.dart';
+// import 'package:flutter/material.dart';
+// import 'package:http/http.dart' as http;
+// import 'dart:convert';
 import 'package:supabase/supabase.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 // import 'package:data/data.dart';
 import 'dart:math';
 
-//ログイン，ログアウト，サインアップ，パスワード変更，現ログインユーザーの特定
+// ログイン，ログアウト，サインアップ，パスワード変更，現ログインユーザーの特定
 
-//Profile=[Nickname, Password, ID, now_login_ID, access_token, refresh_token]
+// Profile=[Nickname, Password, ID, now_login_ID, access_token, refresh_token]
 
-
-//関数説明
-//LoginとLogin_auto関数は，まずautoの方をアプリ起動時点で使って，if文がtrueならログイン成功で次の画面へ，何も起きなければNicknameとPasswordを入力してもらってLogin関数を使う
-
-
-//入力されたNicknameが他ユーザーと被ってないか確認，パスワードが8文字以上で確認用パスワードが一致しているか確認，okならデータベースへ．
-//IDを英数字ランダム８文字で生成して他ユーザーと被りがないものが生成されればそのままデータベースへ
-//アクセストークン(期限1h)，リフレッシュトークン(期限1week)を発行，データベースへ
-//ログイン状態になるのでIDは保持しておく
+// 関数説明
+// LoginとLogin_auto関数は，まずautoの方をアプリ起動時点で使って，if文がtrueならログイン成功で次の画面へ，何も起きなければNicknameとPasswordを入力してもらってLogin関数を使う
 Future<String> register(String register_username_fromUI, String register_password_fromUI, String register_password_again_fromUI, SupabaseClient supabase) async {
   final records = await supabase.from('Profile').select('Nickname').eq('Nickname',register_username_fromUI);
 
