@@ -5,7 +5,7 @@ import 'package:yurubo/database/operate/friend_func.dart' as friend_func;
 import 'package:yurubo/login_num.dart' as login_num;
 
 List friend_list = [
-  "まだ友達はいません"
+  "No friends"
   // "Friend_A",
   // "Friend_B",
   // "Friend_C",
@@ -82,18 +82,17 @@ class FriendPageState extends State<FriendPage> {
         ),
         const SizedBox(height: 10),
         Center(
-          child: ElevatedButton(
-            child: const Text(
-              "Renew",
-              style: TextStyle(fontSize: 20),
-            ),
-            onPressed: () async{
-                List friend_list_0 = await friend_func.getRoomsFromSupabase(login_num.now_login_ID.toString(), supabase);            
-                setState(() {friend_list = friend_list_0;});
-              }, //when press【Renew】button
+          child: IconButton(
+            icon: const Icon(Icons.refresh),
+            onPressed: () async {
+              List friend_list_0 = await friend_func.getRoomsFromSupabase(
+                  login_num.now_login_ID.toString(), supabase);
+              setState(() {
+                friend_list = friend_list_0;
+              });
+            }, //when press【Renew】button
           ),
         ),
-          
         Expanded(
             child: ListView(
           children: [
@@ -104,122 +103,3 @@ class FriendPageState extends State<FriendPage> {
     ));
   }
 }
-
-// import 'package:flutter/material.dart';
-// import 'package:supabase/supabase.dart';
-// final supabase = SupabaseClient(
-//   'https://yourproject.supabase.co',
-//   'your-anon-key',
-// );
-// Future<List<Friend>> getFriends() async {
-//   final response = await supabase
-//       .from('friends')
-//       .select()
-//       .order('name', ascending: true)
-//       .execute();
-//   return (response.data as List<dynamic>)
-//       .map((friend) => Friend.fromJson(friend))
-//       .toList();
-// }
-// class Friend {
-//   final int id;
-//   final String name;
-//   final String imageUrl;
-//   const Friend({
-//     required this.id,
-//     required this.name,
-//     required this.imageUrl,
-//   });
-//   factory Friend.fromJson(Map<String, dynamic> json) {
-//     return Friend(
-//       id: json['id'] as int,
-//       name: json['name'] as String,
-//       imageUrl: json['imageUrl'] as String,
-//     );
-//   }
-// }
-// void main() {
-//   runApp(const MyApp());
-// }
-// class MyApp extends StatefulWidget {
-//   const MyApp({Key? key}) : super(key: key);
-//   @override
-//   State<MyApp> createState() => _MyAppState();
-// }
-// class _MyAppState extends State<MyApp> {
-//   @override
-//   Widget build(BuildContext context) {
-//     return MaterialApp(
-//       title: 'ゆるぼ',
-//       theme: ThemeData(
-//         primarySwatch: Colors.blue,
-//       ),
-//       home: const FriendListPage(),
-//     );
-//   }
-// }
-
-// class FriendListPage extends StatelessWidget {
-//   const FriendListPage({Key? key}) : super(key: key);
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(
-//         title: const Text('Friend List'),
-//       ),
-//       body: FutureBuilder<List<Friend>>(
-//         future: getFriends(),
-//         builder: (context, snapshot) {
-//           if (snapshot.hasData) {
-//             final friends = snapshot.data!;
-//             return ListView.builder(
-//               itemCount: friends.length,
-//               itemBuilder: (context, index) {
-//                 final friend = friends[index];
-//                 return GestureDetector(
-//                   onTap: () {
-//                     Navigator.push(
-//                       context,
-//                       MaterialPageRoute(
-//                         builder: (context) => FriendDetailPage(friend),
-//                       ),
-//                     );
-//                   },
-//                   child: ListTile(
-//                     leading: const Icon(Icons.person),
-//                     title: Text(friend.name),
-//                   ),
-//                 );
-//               },
-//             );
-//           } else if (snapshot.hasError) {
-//             return Center(
-//               child: Text('Error: ${snapshot.error}'),
-//             );
-//           } else {
-//             return const Center(child: CircularProgressIndicator());
-//           }
-//         },
-//       ),
-//     );
-//   }
-// }
-
-// class FriendDetailPage extends StatelessWidget {
-//   final Friend friend;
-
-//   const FriendDetailPage(this.friend, {Key? key}) : super(key: key);
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(
-//         title: const Text('Friend Detail'),
-//       ),
-//       body: Center(
-//         child: Text('${friend.name} Detail'),
-//       ),
-//     );
-//   }
-// }

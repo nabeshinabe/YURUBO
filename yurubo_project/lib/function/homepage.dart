@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:yurubo/function/joinpage.dart' as joinpage;
 import 'package:yurubo/function/friendpage.dart' as friendpage;
 import 'package:yurubo/function/mypage.dart' as mypage;
-import 'package:yurubo/login_num.dart' as login_num;
+// import 'package:yurubo/login_num.dart' as login_num;
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});

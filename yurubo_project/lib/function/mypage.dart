@@ -25,27 +25,16 @@ class MyPageState extends State<MyPage> {
           ),
           title: const Text("My Page"),
         ),
-        
         body: ListView(
           padding: const EdgeInsets.symmetric(horizontal: 24.0),
           children: [
-            const Text("Your ID"),
-            Text(login_num.now_login_ID.toString()),
             SizedBox(height: 10),
-            ElevatedButton(
-              child: const Text(
-                "Change Password",
-                style: TextStyle(fontSize: 20),
-              ),
-              onPressed: () {},
-            ),
-            SizedBox(height: 10),
-            ElevatedButton(
-              child: const Text(
-                "other function??",
-                style: TextStyle(fontSize: 20),
-              ),
-              onPressed: () {},
+            Row(
+              children: [
+                const Text("Your ID:  ", style: TextStyle(fontSize: 20)),
+                Text(login_num.now_login_ID.toString(),
+                    style: TextStyle(fontSize: 20)),
+              ],
             ),
             SizedBox(height: 10),
             ElevatedButton(
@@ -67,7 +56,7 @@ class MyPageState extends State<MyPage> {
             ElevatedButton(
               child: const Text(
                 "Logout",
-                style: TextStyle(fontSize: 20, color: Colors.yellow),
+                style: TextStyle(fontSize: 20),
               ),
               onPressed: () {
                 Navigator.pop(context);
