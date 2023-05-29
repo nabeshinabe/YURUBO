@@ -5,7 +5,6 @@ import 'package:yurubo/function/add_joinpage.dart' as addjoinpage;
 import 'package:yurubo/database/operate/join_func.dart' as join_func;
 import 'package:yurubo/login_num.dart' as login_num;
 
-
 String join_message = " ";
 
 List join_list = [
@@ -45,7 +44,7 @@ class JoinPageState extends State<JoinPage> {
                         setState(() {
                           now_join_place = place;
 
-                          login_num.now_join_room_number = room_number; 
+                          login_num.now_join_room_number = room_number;
                         });
                       },
                     ),
@@ -130,19 +129,21 @@ class JoinPageState extends State<JoinPage> {
                 style: TextStyle(fontSize: 20),
               ),
               onPressed: () {
-                if(login_num.now_join_room_number != 0){
-                  join_func.join(login_num.now_login_ID.toString(), login_num.now_join_room_number, supabase);
+                if (login_num.now_join_room_number != 0) {
+                  join_func.join(login_num.now_login_ID.toString(),
+                      login_num.now_join_room_number, supabase);
                   Navigator.push(
                     context,
                     MaterialPageRoute(
                         builder: (context) => const chatpage.ChatPage()),
                   );
-                }else{
+                } else {
                   showDialog(
                     context: context,
                     builder: (context) {
                       return const AlertDialog(
-                        content: Text("何も選択されていません"),
+                        content: Text(
+                            "You need to choose a place first."), //何も選択されていません
                       );
                     }, //when press【Register】button
                   );
@@ -163,21 +164,20 @@ class JoinPageState extends State<JoinPage> {
           ),
           const SizedBox(height: 10),
           Center(
-          child: ElevatedButton(
-            child: const Text(
-              "Renew",
-              style: TextStyle(fontSize: 20),
-            ),
-            onPressed: () async{
-                bool is_makeroom = await join_func.is_makeroom(login_num.now_login_ID, supabase);
-                List join_list_0 = await join_func.getRoomsFromSupabase(is_makeroom, supabase);         
+            child: IconButton(
+              icon: const Icon(Icons.refresh),
+              onPressed: () async {
+                bool is_makeroom = await join_func.is_makeroom(
+                    login_num.now_login_ID, supabase);
+                List join_list_0 =
+                    await join_func.getRoomsFromSupabase(is_makeroom, supabase);
                 setState(() {
                   join_list = join_list_0;
                   now_join_place = '';
                 });
               }, //when press【Renew】button
+            ),
           ),
-        ),
           Expanded(
               child: ListView(
             children: [

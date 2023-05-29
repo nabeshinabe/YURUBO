@@ -1,5 +1,5 @@
 # YURUBO
-## 使い方／How　to use
+## 使い方／How to use
 - Supabaseにてデータベースを作成する
 - このディレクトリに.envを置き、Supabaseで作成したデータベースから、URLとANONKEYをVAR_URLとVAR_ANONKEYという変数でそのファイルに書く
 - main.dartを実行

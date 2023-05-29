@@ -112,13 +112,16 @@ class ChatPageState extends State<ChatPage> {
 
   Widget show_chat_card_list() {
     List<Card> chat_card_list = [];
+    String time_toUI;
     for (int i = 0; i < chat_list.length; i++) {
-      if (chat_list[i][0] == login_num.now_login_ID) {
-        chat_card_list.add(show_chat_card_I(
-            chat_list[i][1], chat_list[i][2], chat_list[i][3]));
+      time_toUI = chat_list[i][2];
+      time_toUI = time_toUI.substring(5, 16);
+      if (chat_list[i][0] == login_num.now_login_ID.toString()) {
+        chat_card_list
+            .add(show_chat_card_I(chat_list[i][1], time_toUI, chat_list[i][3]));
       } else {
-        chat_card_list.add(
-            show_chat_card(chat_list[i][1], chat_list[i][2], chat_list[i][3]));
+        chat_card_list
+            .add(show_chat_card(chat_list[i][1], time_toUI, chat_list[i][3]));
       }
     }
     return Column(children: chat_card_list);
@@ -137,19 +140,20 @@ class ChatPageState extends State<ChatPage> {
         title: const Text("Chat Room"),
         actions: <Widget>[
           ElevatedButton(
-              onPressed: () {
-                Navigator.pop(context);
-                chat_func.deleteChatRoom(login_num.now_join_room_number, supabase);   
-                setState(() {
-                  login_num.now_join_room_number = 0;
-                  joinpage.now_join_place = '';
-                });
-              },
-              child: const Text(
-                " Room Delete",
-                style: TextStyle(fontSize: 15),
-              ),
+            onPressed: () {
+              Navigator.pop(context);
+              chat_func.deleteChatRoom(
+                  login_num.now_join_room_number, supabase);
+              setState(() {
+                login_num.now_join_room_number = 0;
+                joinpage.now_join_place = '';
+              });
+            },
+            child: const Text(
+              "Dismiss",
+              style: TextStyle(fontSize: 15, color: Colors.red),
             ),
+          ),
         ],
       ),
       body: Column(
@@ -157,15 +161,15 @@ class ChatPageState extends State<ChatPage> {
           const SizedBox(height: 10),
           Row(children: [
             const SizedBox(width: 40),
-            ElevatedButton(
-              child: const Text(
-                "Reload",
-                style: TextStyle(fontSize: 20),
-              ),
-              onPressed: () async{
-                List chat_list_0 = await chat_func.getmessages(login_num.now_join_room_number, supabase);            
-                setState(() {chat_list = chat_list_0;});
-              }, //when press【Join】button
+            IconButton(
+              icon: const Icon(Icons.refresh),
+              onPressed: () async {
+                List chat_list_0 = await chat_func.getmessages(
+                    login_num.now_join_room_number, supabase);
+                setState(() {
+                  chat_list = chat_list_0;
+                });
+              }, //when press【Reload】button
             ),
             const SizedBox(width: 30),
             Text(
@@ -173,13 +177,11 @@ class ChatPageState extends State<ChatPage> {
               style: TextStyle(fontSize: 25),
             ),
           ]),
-
           const Divider(
             height: 10.0,
             indent: 10.0,
             color: Colors.blue,
           ),
-
           Expanded(
               child: ListView(
             children: [
@@ -202,16 +204,17 @@ class ChatPageState extends State<ChatPage> {
               const SizedBox(width: 10.0),
               ElevatedButton(
                 child: const Text('Send'),
-                onPressed: () async{
-                  await chat_func.sendchat(login_num.now_join_room_number, login_num.now_login_ID, chat_send_fromUI(), supabase);
-                  
+                onPressed: () async {
+                  await chat_func.sendchat(login_num.now_join_room_number,
+                      login_num.now_login_ID, chat_send_fromUI(), supabase);
+
                   // 送信と同時にリストの更新
-                  List chat_list_0 = await chat_func.getmessages(login_num.now_join_room_number, supabase);            
+                  List chat_list_0 = await chat_func.getmessages(
+                      login_num.now_join_room_number, supabase);
                   setState(() {
-                    chat_list = chat_list_0; 
+                    chat_list = chat_list_0;
                     chat_send_controller.text = ""; // 送信と同時に書いた文字も消す
-                    });
-                  
+                  });
                 }, //when press【Send】button
               ),
               const SizedBox(width: 10.0),

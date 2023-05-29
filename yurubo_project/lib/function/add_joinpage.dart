@@ -45,7 +45,7 @@ class AddJoinPageState extends State<AddJoinPage> {
             Navigator.pop(context);
           },
         ),
-        title: Text("Add Place"),
+        title: const Text("Add Place"),
       ),
       body: SafeArea(
         child: ListView(
